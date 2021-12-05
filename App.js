@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Audio } from 'expo-av';
 import { AntDesign } from '@expo/vector-icons';
+import Player from './Player.js'
 
 export default function App() {
 
@@ -65,45 +66,51 @@ export default function App() {
 
 
   return (
-    <ScrollView style={styles.container}>
-      <StatusBar style={'light'}/>
-      <View style={styles.header}>
-        <Text style={{textAlign:'center', color:'white', fontSize:25}}>App Música</Text>
-      </View>
+    <View style={{flex:1}}>
+      <ScrollView style={styles.container}>
+        <StatusBar style={'light'}/>
+        <View style={styles.header}>
+          <Text style={{textAlign:'center', color:'white', fontSize:25}}>App Música</Text>
+        </View>
 
-      <View style={styles.table}>
-          <Text style={styles.textNotSelected}>Música</Text>
-          <Text style={styles.textNotSelected}>Artista</Text>
-      </View>
+        <View style={styles.table}>
+            <Text style={styles.tableText}>Música</Text>
+            <Text style={styles.tableText}>Artista</Text>
+        </View>
 
-      {    
-        musicas.map((val,k)=>{
-            
-          if(val.playing){
-              //renderiza musica tocando
+        {    
+          musicas.map((val,k)=>{
+              
+            if(val.playing){
+                //renderiza musica tocando
+                return(
+                  <View style={styles.table}>
+                    <TouchableOpacity onPress={()=>changeMusic(k)} style={{width:'100%', flexDirection:'row'}}>
+                        <Text style={styles.textSelected}><AntDesign name="play" size={15} color="#1DB954" /> {val.nome}</Text>
+                        <Text style={styles.textSelected}>{val.artista}</Text>
+                    </TouchableOpacity>
+                  </View>
+                );
+            }else{
               return(
                 <View style={styles.table}>
                   <TouchableOpacity onPress={()=>changeMusic(k)} style={{width:'100%', flexDirection:'row'}}>
-                      <Text style={styles.textSelected}><AntDesign name="play" size={15} color="#1DB954" /> {val.nome}</Text>
-                      <Text style={styles.textSelected}>{val.artista}</Text>
+                      <Text style={styles.textNotSelected}><AntDesign name="play" size={15} color="white" /> {val.nome}</Text>
+                      <Text style={styles.textNotSelected}>{val.artista}</Text>
                   </TouchableOpacity>
                 </View>
               );
-          }else{
-            return(
-              <View style={styles.table}>
-                <TouchableOpacity onPress={()=>changeMusic(k)} style={{width:'100%', flexDirection:'row'}}>
-                    <Text style={styles.textNotSelected}><AntDesign name="play" size={15} color="white" /> {val.nome}</Text>
-                    <Text style={styles.textNotSelected}>{val.artista}</Text>
-                </TouchableOpacity>
-              </View>
-            );
-          }
+            }
 
-        })
-      }
+          })
+        }
 
-    </ScrollView>
+          <View style={{paddingBottom:200}}>
+
+          </View>
+      </ScrollView>
+      <Player></Player>
+    </View>
   );
 }
 
@@ -124,12 +131,19 @@ const styles = StyleSheet.create({
     borderBottomColor:'white',
     borderBottomWidth:1,
   },
+  tableText:{
+    width:'50%', 
+    color:'rgb(200,200,200)',
+    textAlign:'center'
+  },
   textNotSelected:{
     width:'50%', 
     color:'rgb(200,200,200)',
+    textAlign:'center'
   },
   textSelected:{
     width:'50%', 
     color:'#1DB954',
+    textAlign:'center'
   },
 });
