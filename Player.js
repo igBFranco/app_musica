@@ -7,6 +7,87 @@ import { Audio } from 'expo-av';
 
 export default function Player(props) {
 
+    const handleBack = async()=>{
+        let newIndex = props.audioIndex - 1;
+        if(newIndex < 0){
+            newIndex = props.musicas.lenght - 1;
+        }
+        props.setarAudioIndex(newIndex);
+
+        let curFile = props.musicas[newIndex].file;
+
+        //atualizar musica selecionada na interface
+        let newMusics = props.musicas.filter((val,k)=>{
+            if(newIndex == k){
+              props.musicas[k].playing = true;
+              curFile = props.musicas[k].file;
+            }else{
+              props.musicas[k].playing = false;
+            }
+  
+            return props.musicas[k];
+        });
+
+        //reproduzir o audio selecionado
+        if(props.audio != null){
+            props.audio.unloadAsync();
+        }
+  
+        let curAudio = new Audio.Sound();
+        
+        try {
+            await curAudio.loadAsync(curFile);
+            await curAudio.playAsync(); 
+        } catch (error) {
+          
+        }
+  
+        props.setarAudio(curAudio);
+        props.setarMusicas(newMusics);
+
+
+    }
+
+    const handleNext = async()=>{
+        
+        let newIndex = props.audioIndex + 1;
+        if(newIndex >= props.musicas.lenght){
+            newIndex = 0;
+        }
+        props.setarAudioIndex(newIndex);
+
+        let curFile = props.musicas[newIndex].file;
+
+        //atualizar musica selecionada na interface
+        let newMusics = props.musicas.filter((val,k)=>{
+            if(newIndex == k){
+              props.musicas[k].playing = true;
+              curFile = props.musicas[k].file;
+            }else{
+              props.musicas[k].playing = false;
+            }
+  
+            return props.musicas[k];
+        });
+
+        //reproduzir o audio selecionado
+        if(props.audio != null){
+            props.audio.unloadAsync();
+        }
+  
+        let curAudio = new Audio.Sound();
+        
+        try {
+            await curAudio.loadAsync(curFile);
+            await curAudio.playAsync(); 
+        } catch (error) {
+          
+        }
+  
+        props.setarAudio(curAudio);
+        props.setarMusicas(newMusics);
+    }
+
     const handlePlay = async()=>{
         let curFile = props.musicas[props.audioIndex].file;
 
@@ -52,7 +133,7 @@ export default function Player(props) {
 
     return(
         <View style={styles.player}>
-            <TouchableOpacity style={{marginRight:20, marginLeft:20}}>
+            <TouchableOpacity onPress={()=>handleBack()} style={{marginRight:20, marginLeft:20}}>
                 <AntDesign name="banckward" size={35} color="white"></AntDesign>
             </TouchableOpacity>
             {
@@ -65,7 +146,7 @@ export default function Player(props) {
                     <AntDesign name="pausecircleo" size={35} color="#1DB954"></AntDesign>
                 </TouchableOpacity>
             }
-            <TouchableOpacity style={{marginRight:20, marginLeft:20}}>
+            <TouchableOpacity onPress={()=>handleNext()} style={{marginRight:20, marginLeft:20}}>
                 <AntDesign name="forward" size={35} color="white"></AntDesign>
             </TouchableOpacity>
         </View>

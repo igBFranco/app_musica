@@ -117,7 +117,7 @@ export default function App() {
 
           </View>
       </ScrollView>
-      <Player playing={playing} setPlaying={setPlaying} audioIndex={audioIndex} musicas={musicas} setarMusicas={setarMusicas} audio={audio} setarAudio={setarAudio}></Player>
+      <Player playing={playing} setPlaying={setPlaying} setarAudioIndex={setarAudioIndex} audioIndex={audioIndex} musicas={musicas} setarMusicas={setarMusicas} audio={audio} setarAudio={setarAudio}></Player>
     </View>
   );
 }
