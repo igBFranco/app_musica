@@ -134,7 +134,7 @@ export default function Player(props) {
     return(
         <View style={styles.player}>
             <TouchableOpacity onPress={()=>handleBack()} style={{marginRight:20, marginLeft:20}}>
-                <AntDesign name="banckward" size={35} color="white"></AntDesign>
+                <AntDesign name="stepbackward" size={35} color="white"></AntDesign>
             </TouchableOpacity>
             {
                 (!props.playing)?
@@ -147,7 +147,7 @@ export default function Player(props) {
                 </TouchableOpacity>
             }
             <TouchableOpacity onPress={()=>handleNext()} style={{marginRight:20, marginLeft:20}}>
-                <AntDesign name="forward" size={35} color="white"></AntDesign>
+                <AntDesign name="stepforward" size={35} color="white"></AntDesign>
             </TouchableOpacity>
         </View>
     );
